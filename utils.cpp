@@ -19,6 +19,8 @@ namespace Ga
             std::vector<float> fitness;
             std::vector<std::vector<float>> cityPoints;
             std::vector<int> result ;
+            std::string outputFile;
+            int op;
             
             
             double pitagoras(float x1, float y1, float x2, float y2){
@@ -288,12 +290,14 @@ namespace Ga
             Genetic(){
             }
             
-            Genetic(float mutationRate,int nGenerations, std::vector<std::vector<float>> cityPoints, int inputSize, int popSize){
+            Genetic(float mutationRate,int nGenerations, std::vector<std::vector<float>> cityPoints, int inputSize, int popSize, std::string outputFile, int op){
                 this->mutationRate = mutationRate;
                 this->nGenerations = nGenerations;
                 this->cityPoints = cityPoints;
                 this->popSize = popSize;
                 this->inputSize = inputSize;
+                this->outputFile = outputFile;
+                this->op = op;
             } 
             
             void run(){
@@ -301,21 +305,26 @@ namespace Ga
                 std::mt19937 mt(rd());
                 std::uniform_real_distribution<double> dist(0.0, 1.0);
 
+                std::ofstream outfile;
+                outfile.open(this->outputFile);
 
                 int gen = 0; 
                 this->createInitialPopulation();
                 //this->mostrarPopulacao();
-                std::cout<<this->popSize<<std::endl;
+                //std::cout<<this->popSize<<std::endl;
                 this->calculateFitness();
                 int best = this->findBestFit();
-                std::cout<<this->pathValue(this->population[best])<<std::endl;
+                //std::cout<<this->pathValue(this->population[best])<<std::endl;
                 while (gen < this->nGenerations)
                 {
                     
                     int pathIdx1 = this->rouletteSelection();
                     int pathIdx2 = this->rouletteSelection();
 
-                    this->oX(this->population[pathIdx1], this->population[pathIdx2]);
+                    if(this->op == 1)
+                        this->oX(this->population[pathIdx1], this->population[pathIdx2]);
+                    else 
+                        this->cX(this->population[pathIdx1], this->population[pathIdx2]);
 
                     float mut = dist(mt);
 
@@ -324,7 +333,8 @@ namespace Ga
                     
 
                     this->populationMaintenance();
-                    std::cout<<this->pathValue(this->population[best])<<std::endl;    
+                    //std::cout<<this->pathValue(this->population[best])<<std::endl;    
+                    outfile<<this->pathValue(this->population[best])<<"\n";
                     gen+=1;
                 }
                 

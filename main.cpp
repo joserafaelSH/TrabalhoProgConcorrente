@@ -1,32 +1,57 @@
 #include<iostream>
+#include <thread>
 #include "utils.cpp"
 
 std::string fileName = "att48.txt";
 
-int main(){
-
-    //fazer 4 threads
-    //2 configuracoes de parametros para cada cruzamento: geracoes, mutacao
-    //executar as threads 
-    //dar o join para esperar o final de todas
-    //cada thread escreve em um arquivo sua saida 
-    //grafico de como a resposta do genetico evoluiu para cada thread 
-    //relatorio
-
-    //config1: geracoes, mutacao , cruzamento ox
-    //config2: geracoes, mutacao , cruzamento ox
-    //config3: geracoes, mutacao , cruzamento cx
-    //config4: geracoes, mutacao , cruzamento cx
-
-
-    //exemplo de uma execucao
+void thread1(){
+    std::string outputFile = "saidaThread1.txt";
     fileReader::Reader entrada(fileName);
     entrada.readFile();
-    std::vector<std::vector<float>> c =  entrada.get_cityPoints();
-    Ga::Genetic genetico(0.1, 50000,c , entrada.get_inputSize(), 25);
+    Ga::Genetic genetico(0.1, 50000, entrada.get_cityPoints() , entrada.get_inputSize(), 25, outputFile, 0 );
     genetico.run();
+    std::cout<<"Fim da thread1"<<std::endl;
+}
 
-   
+void thread2(){
+    std::string outputFile = "saidaThread2.txt";
+    fileReader::Reader entrada(fileName);
+    entrada.readFile();
+    Ga::Genetic genetico(0.25, 5000, entrada.get_cityPoints() , entrada.get_inputSize(), 10, outputFile, 0 );
+    genetico.run();
+    std::cout<<"Fim da thread2"<<std::endl;
+}
+
+void thread3(){
+    std::string outputFile = "saidaThread3.txt";
+    fileReader::Reader entrada(fileName);
+    entrada.readFile();
+    Ga::Genetic genetico(0.01, 10000, entrada.get_cityPoints() , entrada.get_inputSize(), 50, outputFile, 1);
+    genetico.run();
+    std::cout<<"Fim da thread3"<<std::endl;
+}
+
+void thread4(){
+    std::string outputFile = "saidaThread4.txt";
+    fileReader::Reader entrada(fileName);
+    entrada.readFile();
+    Ga::Genetic genetico(0.7, 25000, entrada.get_cityPoints() , entrada.get_inputSize(), 5, outputFile, 1);
+    genetico.run();
+    std::cout<<"Fim da thread4"<<std::endl;
+}
+
+void (*ponteirodefuncao[4])() = {thread1,thread2,thread3,thread4};
+
+int main(){
+
+    std::vector<std::thread> threadsList;
+
+    for (int i = 0; i < 4; i++)
+        threadsList.push_back(std::thread(ponteirodefuncao[i]));
+        
+    for (int i = 0; i < 4; i++)
+        threadsList[i].join();  
+    
     
     return 0 ;
 }
