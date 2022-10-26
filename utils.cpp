@@ -21,6 +21,7 @@ namespace Ga
             std::vector<int> result ;
             std::string outputFile;
             int op;
+            int t;
             
             
             double pitagoras(float x1, float y1, float x2, float y2){
@@ -121,9 +122,9 @@ namespace Ga
             void calculateFitness(){
                 for(int i = 0; i< this->popSize; i++){
                     this->fitness.push_back(1.0/this->pathValue(this->population[i]));
-                }
-                   
+                }   
             }
+            
             
             void showPath(std::vector<int> path){
                 for(auto& c: path)
@@ -158,24 +159,19 @@ namespace Ga
 
             }
 
-            int mutation(std::vector<int>& path){
+            void mutation(std::vector<int>& path){
                 std::random_device rd;
                 std::mt19937 mt(rd());
-                std::uniform_int_distribution<int> dist(1, 10);
-
-                int n = dist(mt);
-                //std::cout<< n <<std::endl;
-                for(int i = 0; i< n; i++){
-                    std::uniform_int_distribution<int> dist(0, this->inputSize);
-                    int pos1 = dist(mt);
-                    int pos2 = dist(mt);
-                    //std::cout<<pos1<<" "<<pos2<<std::endl;
-                    int aux = path[pos1]; 
-                    path[pos1] = path[pos2]; 
-                    path[pos2] = aux;
-                }
+                std::uniform_int_distribution<int> dist(0, this->inputSize-1);
+                int pos1 = dist(mt);
+                int pos2 = dist(mt);
+                //std::cout<<pos1<<" "<<pos2<<std::endl;
+                int aux = path[pos1]; 
+                path[pos1] = path[pos2]; 
+                path[pos2] = aux;
+                //std::cout<<"executandoMutacao"<<std::endl;
                 
-
+    
             }
             
             void cX(std::vector<int> path1, std::vector<int> path2){
@@ -290,7 +286,7 @@ namespace Ga
             Genetic(){
             }
             
-            Genetic(float mutationRate,int nGenerations, std::vector<std::vector<float>> cityPoints, int inputSize, int popSize, std::string outputFile, int op){
+            Genetic(float mutationRate,int nGenerations, std::vector<std::vector<float>> cityPoints, int inputSize, int popSize, std::string outputFile, int op, int t){
                 this->mutationRate = mutationRate;
                 this->nGenerations = nGenerations;
                 this->cityPoints = cityPoints;
@@ -298,6 +294,7 @@ namespace Ga
                 this->inputSize = inputSize;
                 this->outputFile = outputFile;
                 this->op = op;
+                this->t = t;
             } 
             
             void run(){
@@ -313,11 +310,13 @@ namespace Ga
                 //this->mostrarPopulacao();
                 //std::cout<<this->popSize<<std::endl;
                 this->calculateFitness();
-                int best = this->findBestFit();
+                
+                
                 //std::cout<<this->pathValue(this->population[best])<<std::endl;
                 while (gen < this->nGenerations)
                 {
-                    
+
+                    //std::cout<<"executando thread "<<this->t<<std::endl;
                     int pathIdx1 = this->rouletteSelection();
                     int pathIdx2 = this->rouletteSelection();
 
@@ -333,8 +332,11 @@ namespace Ga
                     
 
                     this->populationMaintenance();
+                    int best = this->findBestFit();
                     //std::cout<<this->pathValue(this->population[best])<<std::endl;    
                     outfile<<this->pathValue(this->population[best])<<"\n";
+                    
+
                     gen+=1;
                 }
                 
@@ -363,7 +365,6 @@ namespace fileReader
                 std::ifstream arquivo;
                 arquivo.open(this->fileName);
                 
-            
                 int counter = 0;
                 std::string line;
                 std::string buffer;
