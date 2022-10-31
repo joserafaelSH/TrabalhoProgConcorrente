@@ -132,7 +132,7 @@ namespace Ga
                 
                 std::cout<<"\n";
    
-}
+            }
 
             int rouletteSelection(){
                 std::random_device rd;
