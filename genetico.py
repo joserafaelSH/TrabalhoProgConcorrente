@@ -217,5 +217,3 @@ class Genetic:
             out.write(str(self.pathValue(self.population[best])) + '\n')
 
             gen+=1
-
-    

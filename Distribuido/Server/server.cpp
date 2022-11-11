@@ -60,7 +60,6 @@ int main(){
 		
 	}
 
-
 	while(1){
 		newSocket = accept(sockfd, (struct sockaddr*)&newAddr, &addr_size);
 		if(newSocket < 0){
@@ -89,7 +88,6 @@ int main(){
 					break;
 				}
 			}
-			
 		}
 	}
 

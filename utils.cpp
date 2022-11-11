@@ -23,7 +23,6 @@ namespace Ga
             int op;
             int t;
             
-            
             double pitagoras(float x1, float y1, float x2, float y2){
                 float x = x2 - x1 ;
                 float y = y2 - y1; 
@@ -170,8 +169,6 @@ namespace Ga
                 path[pos1] = path[pos2]; 
                 path[pos2] = aux;
                 //std::cout<<"executandoMutacao"<<std::endl;
-                
-    
             }
             
             void cX(std::vector<int> path1, std::vector<int> path2){
@@ -183,8 +180,6 @@ namespace Ga
                 do{
                     result1[idx] = path1[idx]; 
                     idx = this->getIndex(path2, result1[idx]);
-                   
-
                 }
                 while(idx != 0 and idx != -1);
 
@@ -193,7 +188,6 @@ namespace Ga
                 do{
                     result2[idx] = path2[idx]; 
                     idx = this->getIndex(path1, result2[idx]);
-                
                 }
                 while(idx != 0 and idx != -1);
 
@@ -202,8 +196,6 @@ namespace Ga
                 }else{
                     this->result = result2;
                 }
-            
-
             }
 
             void oX(std::vector<int> path1, std::vector<int> path2){
@@ -260,7 +252,6 @@ namespace Ga
                 }else{
                     this->result = ind2;
                 }
-
             }
 
             void populationMaintenance(){
@@ -269,8 +260,6 @@ namespace Ga
 
                     this->population[idx] = this->result;
                 }
-               
-                
             }
       
             void mostrarPopulacao(){
@@ -311,11 +300,9 @@ namespace Ga
                 //std::cout<<this->popSize<<std::endl;
                 this->calculateFitness();
                 
-                
                 //std::cout<<this->pathValue(this->population[best])<<std::endl;
                 while (gen < this->nGenerations)
                 {
-
                     //std::cout<<"executando thread "<<this->t<<std::endl;
                     int pathIdx1 = this->rouletteSelection();
                     int pathIdx2 = this->rouletteSelection();
@@ -335,11 +322,9 @@ namespace Ga
                     int best = this->findBestFit();
                     //std::cout<<this->pathValue(this->population[best])<<std::endl;    
                     outfile<<this->pathValue(this->population[best])<<"\n";
-                    
 
                     gen+=1;
                 }
-                
             }
     };
     
@@ -406,7 +391,6 @@ namespace fileReader
             std::vector<std::vector<float>> get_cityPoints(){
                 return this->cityPoints;
             }
-
     };
     
 }; // namespace LeituraArquivo

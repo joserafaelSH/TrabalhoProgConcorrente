@@ -23,7 +23,6 @@ namespace Ga
             int op;
             int t;
             
-            
             double pitagoras(float x1, float y1, float x2, float y2){
                 float x = x2 - x1 ;
                 float y = y2 - y1; 
@@ -68,7 +67,6 @@ namespace Ga
                         idx = i;
                     }
                 } 
-
                 return idx;
             }
 
@@ -82,7 +80,6 @@ namespace Ga
             }
             
             void createInitialPopulation(){
-
                 std::random_device dev;
                 std::mt19937 rng(dev());
 
@@ -104,7 +101,6 @@ namespace Ga
             }
 
             float pathValue(std::vector<int> path){
-                
                 float value = 0.0; 
 
                 for(int i = 0; i < path.size() - 2; i++){
@@ -115,7 +111,6 @@ namespace Ga
                         this->cityPoints[path[i+1]-1][1]
                     );
                 }
-                
                 return value ;
             }
 
@@ -171,8 +166,6 @@ namespace Ga
                 path[pos1] = path[pos2]; 
                 path[pos2] = aux;
                 //std::cout<<"executandoMutacao"<<std::endl;
-                
-    
             }
             
             void cX(std::vector<int> path1, std::vector<int> path2){
@@ -184,8 +177,6 @@ namespace Ga
                 do{
                     result1[idx] = path1[idx]; 
                     idx = this->getIndex(path2, result1[idx]);
-                   
-
                 }
                 while(idx != 0 and idx != -1);
 
@@ -194,7 +185,6 @@ namespace Ga
                 do{
                     result2[idx] = path2[idx]; 
                     idx = this->getIndex(path1, result2[idx]);
-                
                 }
                 while(idx != 0 and idx != -1);
 
@@ -203,8 +193,6 @@ namespace Ga
                 }else{
                     this->result = result2;
                 }
-            
-
             }
 
             void oX(std::vector<int> path1, std::vector<int> path2){
@@ -226,7 +214,6 @@ namespace Ga
                 std::vector<bool> holes1(this->inputSize, true); 
                 std::vector<bool> holes2(this->inputSize, true); 
 
-               
                 for(int k = 0; k< this->inputSize; k++){
                     holes1[ind2[k]] = false;
                     holes2[ind1[k]] = false;
@@ -261,7 +248,6 @@ namespace Ga
                 }else{
                     this->result = ind2;
                 }
-
             }
 
             bool verifyPath(std::vector<int> path){
@@ -299,8 +285,6 @@ namespace Ga
                     std::cout<<"\n";
                 }
             }
-        
-            
 
         public:
             Genetic(){
@@ -390,7 +374,6 @@ namespace fileReader
                 std::string line;
                 std::string buffer;
                 float n ,x, y ;
-           
 
                 if(arquivo.is_open()){
                     while(getline(arquivo, line)){

@@ -3,7 +3,6 @@ import math
 from typing import List
 
 class Ga:
-
     def __init__(self, tamanhoPopulacao:int, taxaMutacao:float, numeroGeracoes:int, arqEntrada:str) -> None:
         self.tamanhoPopulacao = tamanhoPopulacao
         self.taxaMutacao = taxaMutacao 
@@ -68,15 +67,12 @@ class Ga:
         
         print(self.cidades)
 
-                
-
     def run(self)->float:
         self.lerEntrada()
         self.gerarPopulacaoIncial()
         self.calcularFitness()
         geracao = 0 
         while geracao < self.numeroGeracoes:
-
             pai1 = self.selecaoPais()
             pai2 = self.selecaoPais()
 

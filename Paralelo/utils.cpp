@@ -157,7 +157,6 @@ namespace Ga
                     c+=1;
                 }
                 return pick;
-
             }
 
             void mutation(std::vector<int>& path){
@@ -171,8 +170,6 @@ namespace Ga
                 path[pos1] = path[pos2]; 
                 path[pos2] = aux;
                 //std::cout<<"executandoMutacao"<<std::endl;
-                
-    
             }
             
             void cX(std::vector<int> path1, std::vector<int> path2){
@@ -184,8 +181,6 @@ namespace Ga
                 do{
                     result1[idx] = path1[idx]; 
                     idx = this->getIndex(path2, result1[idx]);
-                   
-
                 }
                 while(idx != 0 and idx != -1);
 
@@ -203,8 +198,6 @@ namespace Ga
                 }else{
                     this->result = result2;
                 }
-            
-
             }
 
             void oX(std::vector<int> path1, std::vector<int> path2){
@@ -299,8 +292,6 @@ namespace Ga
                     std::cout<<"\n";
                 }
             }
-        
-            
 
         public:
             Genetic(){
@@ -330,11 +321,9 @@ namespace Ga
                 //this->mostrarPopulacao();
                 //std::cout<<this->popSize<<std::endl;
                 
-                
                 //std::cout<<this->pathValue(this->population[best])<<std::endl;
                 while (gen < this->nGenerations)
                 {
-
                     this->calculateFitness();
                     //std::cout<<"executando thread "<<this->t<<std::endl;
                     int pathIdx1 = this->rouletteSelection();
@@ -350,18 +339,13 @@ namespace Ga
                     if(mut<= this->mutationRate)
                         this->mutation(this->result);
                     
-
                     int x = this->populationMaintenance();
                     int best = this->findBestFit();
                     std::cout<<this->pathValue(this->population[best])<<std::endl;    
                     outfile<<this->pathValue(this->population[best])<<"\n";
                     
-
                     gen+=1;
                 }
-
-                 
-                
             }
     };
     
@@ -391,7 +375,6 @@ namespace fileReader
                 std::string line;
                 std::string buffer;
                 float n ,x, y ;
-           
 
                 if(arquivo.is_open()){
                     while(getline(arquivo, line)){
@@ -428,7 +411,6 @@ namespace fileReader
             std::vector<std::vector<float>> get_cityPoints(){
                 return this->cityPoints;
             }
-
     };
     
 }; // namespace LeituraArquivo

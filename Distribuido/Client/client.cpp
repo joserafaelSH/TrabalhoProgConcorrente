@@ -42,8 +42,6 @@ int main(){
 	send(clientSocket, buffer, strlen(buffer), 0);
 
 	while(1){
-		
-
 		if(strcmp(buffer, ":exit") == 0){
 			close(clientSocket);
 			std::cout<<"[-]Disconnected from server.\n";
@@ -58,7 +56,6 @@ int main(){
 		
 			}else{
 				std::cout<<"Server: \t"<<buffer<<std::endl;
-				
 
 				char* token;
 				char* rest = buffer;
@@ -99,16 +96,12 @@ int main(){
 				end_t = clock();
 				total_t = (double)(end_t - start_t) / CLOCKS_PER_SEC;
 				
-	
 				std::string retorno = "O melhor valor encontrado = " + std::to_string(x) +  " com um tempo de execucao de " + std::to_string(total_t) +  " sec\n";
 				
 				send(clientSocket, retorno.c_str(), retorno.size(), 0);
 				return 0;
 			}
-
-			
 		}
 	}
-
 	return 0;
 }
